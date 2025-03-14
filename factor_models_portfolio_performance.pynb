@@ -1,0 +1,43 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+# Convert the 'date' column to datetime format
+
+df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
+
+# Plot the time series data
+plt.figure(figsize=(14, 7))
+
+# Plot each column R1, R2, Rm
+plt.plot(df['Date'], df['RESP'], label='RESP', color='green')
+plt.plot(df['Date'], df['IRRESP'], label='IRRESP', color='darkorange')
+plt.plot(df['Date'], df['MKT'], label='MKT', color='blue')
+
+# Set the limits for y-axis
+plt.ylim(50, 250)
+
+
+# Format the x-axis to show month and year at 6-month intervals starting from April 2015
+ax = plt.gca()
+locator = mdates.MonthLocator(interval=3)
+formatter = mdates.DateFormatter('%b %Y')
+
+ax.xaxis.set_major_locator(locator)
+ax.xaxis.set_major_formatter(formatter)
+
+# Set x-axis limits from April 2015 to March 2022
+ax.set_xlim([pd.Timestamp('2015-04-01'), pd.Timestamp('2022-03-31')])
+
+# Rotate date labels for better readability
+plt.xticks(rotation=45)
+
+# Show legend at the center below the graph
+plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=3)
+
+# Add overall title at the top left side above the graph
+plt.annotate('Overall Period', xy=(0, 1), xytext=(-20, 20),
+             xycoords='axes fraction', textcoords='offset points',
+             ha='left', va='top', fontsize=14)
+
+# Display the plot
+plt.show()
